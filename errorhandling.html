@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Event Scheduler</title>
+    <script>
+ function ScheduledEvent(evtDate, evtTitle, maxattendees, coordinator, phonenum, email, infourl)
+ {
+        this.evtDate = evtDate;
+        this.evtTitle = evtTitle;
+        this.maxattendees = maxattendees;
+        this.coordinator = coordinator;
+        this.phonenum = phonenum;
+        this.email = email;
+        this.infourl = infourl;
+        this.PrintEvent = PrintEvent;
+        
+ }
+
+ function PrintEvent()
+ { 
+    document.write("<p>You have scheduled an event named " + this.evtTitle);
+    document.write(" that will occur on " + this.evtDate + " and allow up to " + this.maxattendees + " attendees. ");
+    document.write("The event is coordinated by " + this.coordinator + " who can be reached at " + this.phonenum);
+    document.write(" or by email at " + this.email + ". ");
+    document.write("More information about the event is available at <a href='" + this.infourl + "'> " + this.infourl + "</a></p>");
+ }
+ 
+function Validate()
+{
+    with (document.evtForm)
+{
+    evt = new ScheduledEvent(evtDate.value, evtTitle.value, maxattendees.value, coordinator.value, phonenum.value, email.value, infourl.value);
+}
+    
+    with (evt)
+    {
+        if(evtDate.length< 1)
+            {
+                alert("You must enter a date.");
+                return false;
+            }
+        if (coordinator.length<5)
+            {
+                alert("The coordinator name must be at least five characters long.");
+                return false;
+            }
+        if (evtTitle.length<1)
+            {
+                alert("The title must be at least one character long");
+                return false;
+            }
+        if (!IsEmail(email))
+        {
+            alert("Must contain valid email address");
+            return false;
+        }
+        if (!IsUrl(infourl))
+        {
+            alert("Must contain valid URL");
+            return false;
+        }
+      /*  if (!IsNumeric(maxattendees))
+            {
+                alert("The maximum number of attendees must be a number");
+                return false;
+            }*/
+        evt.PrintEvent();
+        return true;
+        
+    }   
+}
+
+function IsEmail(sEmail)
+{
+    if ((sEmail.length< 6) || (sEmail.indexOf("@", 0) == -1))
+            return false;
+    else 
+             return true;
+}
+
+function IsUrl(sUrl)
+{
+    if (sUrl.indexOf("://", 0) == -1)
+        
+            return false;
+     else
+            return true;
+        
+}
+
+function IsNumeric(sNumber)
+{
+    var numberChars = "0123456789.";
+    var IsNumber=true;
+    var currentChar;
+    
+    //loop through the characters to ensure that each is a character
+    //that would be included in a positive number
+    
+    for (i = 0; i<sNumber.length&&IsNumber == true; i++)
+    {
+        currentChar = sNumber.charAt(i);
+    if (numberChars.indexOf(Char) == -1)
+    {
+        IsNumber = false;
+            }
+    }
+        return IsNumber;  
+}
+
+
+    </script>
+</head>
+
+<body>
+
+<form name= "evtForm" method="post" onsubmit="Validate();">
+    <table>
+        <tr>
+            <td>Event Date: </td>
+            <td> <input type="date" id="evtDate" /></td>
+        </tr>
+        <tr>
+            <td>Title:</td>
+            <td><input type="text" id="evtTitle" /></td>
+        </tr>
+        <tr>
+            <td>Maximum attendees:</td>
+        <td><input type="number" id="maxattendees" /></td>
+        </tr>
+        <tr>
+            <td>Event Coordinator: </td>
+            <td><input type="text" id="coordinator" /></td>
+        </tr>
+        <tr>
+            <td>Phone number (numbers only): </td>
+            <td><input type="tel" id="phonenum" /></td>
+        </tr>
+        <tr>
+            <td>Email: </td>
+            <td><input type="email" id="email" /></td>
+        </tr>
+        <tr>
+            <td>More info: </td>
+            <td><input type="url" id="infourl" /></td>
+        </tr>
+    </table>
+<input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
